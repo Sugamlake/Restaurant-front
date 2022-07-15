@@ -48,7 +48,7 @@ function CheckoutForm() {
         address: data.address,
         city: data.city,
         state: data.state,
-        token: token.token.id,
+        token: "tok_visa",
       }),
     });
 
