@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from "react";
-import { FormGroup, Label, Input } from "reactstrap";
+import { FormGroup, Label, Input, Alert } from "reactstrap";
 import fetch from "isomorphic-fetch";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection from "./cardSection";
@@ -15,6 +15,9 @@ function CheckoutForm() {
     stripe_id: "",
   });
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [color, setColor] = useState("");
+  const [visible, setVisible] = useState(true);
   const stripe = useStripe();
   const elements = useElements();
   const appContext = useContext(AppContext);
@@ -24,6 +27,14 @@ function CheckoutForm() {
     const updateItem = (data[e.target.name] = e.target.value);
     // update the state data object
     setData({ ...data, updateItem });
+  }
+
+  const toggle = () => setVisible(!visible);
+
+  const alert = (message, color,visible) => {
+    setMessage(message);
+    setColor(color);
+    setVisible(visible);
   }
 
   async function submitOrder() {
@@ -54,6 +65,12 @@ function CheckoutForm() {
 
     if (!response.ok) {
       setError(response.statusText);
+      alert(response.statusText, "danger", true);
+      console.log("SUCCESS")
+    }
+    else {
+      setError("");
+      alert("Order Placed Successfully", "success", true);
       console.log("SUCCESS")
     }
 
@@ -74,6 +91,7 @@ function CheckoutForm() {
 
   return (
     <div className="paper">
+      {message != "" && (<Alert color={color} isOpen={visible} toggle={toggle}>{message}</Alert>)}
       <h5>Your information:</h5>
       <hr />
       <FormGroup style={{ display: "flex" }}>

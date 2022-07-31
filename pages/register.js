@@ -11,6 +11,7 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 import { registerUser } from "../components/auth";
 import AppContext from "../components/context";
@@ -19,17 +20,20 @@ const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+  const [message, setMessage] = useState("");
+  const [color, setColor] = useState("");
+  const [visible, setVisible] = useState(true);
   const appContext = useContext(AppContext);
   return (
     <Container>
       <Row>
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
-            <div className="header">
-              <img src="http://localhost:1337/uploads/5a60a9d26a764e7cba1099d8b157b5e9.png" />
+            <div className="header" style={{textAlign:"center"}}>
+              <img src="http://localhost:1337/uploads/23415127b50e44e58fddddfb69ef5e97.jpg" width="200px" />
             </div>
             <section className="wrapper">
-              {Object.entries(error).length !== 0 &&
+              {/* {Object.entries(error).length !== 0 &&
                 error.constructor === Object &&
                 error.message.map((error) => {
                   return (
@@ -42,7 +46,8 @@ const Register = () => {
                       </small>
                     </div>
                   );
-                })}
+                })} */}
+              {message != "" && (<Alert color={color} isOpen={visible} toggle={toggle}>{message}</Alert>)}
               <Form>
                 <fieldset disabled={loading}>
                   <FormGroup>
@@ -98,6 +103,7 @@ const Register = () => {
                           .then((res) => {
                             // set authed user in global context object
                             appContext.setUser(res.data.user);
+                            alert(res.data.message, "success", false);
                             setLoading(false);
                             console.log(`registered user: ${JSON.stringify(res.data)}`)
                           })
@@ -105,6 +111,7 @@ const Register = () => {
                             console.log(`error in register: ${error}`)
                             //setError(error.response.data);
                             setLoading(false);
+                            alert(error.response.data.message, "danger", true);
                           });
                       }}
                     >
