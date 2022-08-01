@@ -58,7 +58,7 @@ if(searchQuery.length > 0){
           top={true}
           style={{ height: 200 }}
           src={
-          NEXT_PUBLIC_API_URL + res.image.url
+          API_URL + res.image.url
           }
         />
         <CardBody>
