@@ -11,6 +11,9 @@ import {
   CardTitle,
   Row,
   Col} from "reactstrap";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+
 function Dishes({restId}){
   const [restaurantID, setRestaurantID] = useState()
   const {addItem} = useContext(AppContext)
@@ -55,7 +58,7 @@ const GET_RESTAURANT_DISHES = gql`
                 <CardImg
                   top={true}
                   style={{ height: 150, width:150 }}
-                  src={`http://localhost:1337${res.image.url}`}
+                  src={NEXT_PUBLIC_API_URL + res.image.url}
                 />
                 <CardBody>
                   <CardTitle>{res.name}</CardTitle>
@@ -64,7 +67,6 @@ const GET_RESTAURANT_DISHES = gql`
                 <div className="card-footer">
                   <Button color="info"
                     outline
-                    color="primary"
                     onClick = {()=> addItem(res)}
                   >
                     + Add To Cart
