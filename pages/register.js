@@ -16,6 +16,8 @@ import {
 import { registerUser } from "../components/auth";
 import AppContext from "../components/context";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -30,7 +32,7 @@ const Register = () => {
         <Col sm="12" md={{ size: 5, offset: 3 }}>
           <div className="paper">
             <div className="header" style={{textAlign:"center"}}>
-              <img src="http://localhost:1337/uploads/9f72d708e1194afeaa429b374a40a02a.jpeg" width="200px" />
+              <img src={API_URL + '/uploads/9f72d708e1194afeaa429b374a40a02a.jpeg'} width="200px" />
             </div>
             <section className="wrapper">
               {/* {Object.entries(error).length !== 0 &&
